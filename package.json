@@ -7,7 +7,13 @@
     "serve": "vite preview"
   },
   "dependencies": {
-    "vue": "^3.0.5"
+    "element-plus": "^1.0.2-beta.41",
+    "sass": "^1.32.11",
+    "sass-loader": "^11.0.1",
+    "scss": "^0.2.4",
+    "scss-loader": "0.0.1",
+    "vue": "^3.0.5",
+    "vue-router": "^4.0.6"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^1.1.4",
