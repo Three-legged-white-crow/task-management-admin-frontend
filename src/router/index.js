@@ -6,7 +6,8 @@ import { createRouter, createWebHistory } from 'vue-router';
 const router = createRouter({
     history: createWebHistory(),
     routes: [
-        { path: "/", component: () => import('../views/login.vue'), meta: { title: '登录页面' }, },
+        { path: "/", component: () => import('../views/log/login.vue'), meta: { title: '登录页面' }, },
+        { path: "/home", component: () => import('../views/home/home.vue'), meta: { title: '' }, },
     ]
 })
 

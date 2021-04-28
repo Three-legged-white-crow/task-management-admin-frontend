@@ -5,10 +5,8 @@ import ElementPlus from 'element-plus';
 import 'element-plus/lib/theme-chalk/index.css';
 // 路由
 import router from './router/index';
+// 全局scss
 import "./styles/index.scss"
-
-//如需要可写成模块化
-// 创建
 
 const app = createApp(App)
 app.use(ElementPlus)

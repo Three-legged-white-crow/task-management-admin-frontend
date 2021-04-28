@@ -17,6 +17,7 @@
             class="middle_width"
             type="password"
             v-model="ruleForm.password"
+            @keyup.enter="enter"
           ></el-input>
         </el-form-item>
         <el-form-item>
@@ -27,12 +28,13 @@
   </div>
 </template>
 <script>
+import { genToken } from "../../utils/randomToken";
 export default {
   data() {
     return {
       ruleForm: {
-        account: "",
-        password: "",
+        account: "admin",
+        password: "123456",
       },
       rules: {
         account: [{ required: true, message: "请输入账号", trigger: "blur" }],
@@ -49,11 +51,15 @@ export default {
             this.ruleForm.password == "123456"
           ) {
             console.log("成功");
+            let token = genToken();
+            console.log(token);
+            this.$router.push("/home");
           } else {
             this.$message.error("账号或密码错误");
           }
         } else {
-          console.log("error submit!!");
+          // console.log("error submit!!");
+          this.$message.error("请输入账号密码");
           return false;
         }
       });
@@ -77,7 +83,7 @@ export default {
   position: fixed;
   top: 0;
   left: 0;
-  background-image: url("../assets/login_image/login.jpg");
+  background-image: url("../../assets/login_image/login.jpg");
   background-size: 100% 100%;
   background-repeat: no-repeat;
   background-position: center center;
