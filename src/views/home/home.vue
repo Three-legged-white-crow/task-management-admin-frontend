@@ -19,7 +19,7 @@
         </el-dropdown>
       </div>
     </div>
-    <div class="home_box">
+    <!-- <div class="home_box">
       <div class="lefts">
         <el-collapse v-model="activeName" accordion @change="handleChange">
           <el-collapse-item
@@ -46,10 +46,65 @@
         <div class="title">{{ single.username }}{{ single.permissions }}</div>
         <div class="bottom_box">
           <el-button type="primary">修改账号</el-button>
-          <!-- <el-button type="primary">主要按钮</el-button> -->
         </div>
       </div>
-    </div>
+    </div> -->
+    <el-table :data="data" style="width: 100%">
+      <el-table-column align="center" fixed label="头像">
+        <template #default="scope">
+          <el-image :src="scope.row.images" class="imagess">
+            <template #placeholder>
+              <div class="image-slot">加载中<span class="dot">...</span></div>
+            </template>
+          </el-image>
+        </template>
+      </el-table-column>
+      <el-table-column align="center" prop="name" label="姓名">
+      </el-table-column>
+      <el-table-column align="center" prop="id" label="id"> </el-table-column>
+      <el-table-column align="center" prop="permissions" label="身份">
+      </el-table-column>
+      <el-table-column align="center" prop="password" label="密码">
+      </el-table-column>
+      <el-table-column align="center" fixed="right" label="操作">
+        <template #default="scope">
+          <el-button @click="handleClick(scope.row)" type="text" size="small"
+            >详情</el-button
+          >
+        </template>
+      </el-table-column>
+    </el-table>
+    <el-dialog title="详情" v-model="centerDialogVisible" width="30%" center>
+      <el-form :model="ruleForm" label-width="100px" class="demo-ruleForm">
+        <el-form-item label="姓名">
+          <el-input v-model="ruleForm.name" disabled></el-input>
+        </el-form-item>
+        <el-form-item label="头像">
+          <el-image :src="ruleForm.images" class="imagess">
+            <template #placeholder>
+              <div class="image-slot">加载中<span class="dot">...</span></div>
+            </template>
+          </el-image>
+        </el-form-item>
+        <el-form-item label="id">
+          <el-input v-model="ruleForm.id" disabled></el-input>
+        </el-form-item>
+        <el-form-item label="密码">
+          <el-input
+            v-model="ruleForm.password"
+            placeholder="不修改则不填"
+          ></el-input>
+        </el-form-item>
+      </el-form>
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button @click="centerDialogVisible = false">取 消</el-button>
+          <el-button type="primary" @click="centerDialogVisible = false"
+            >确 定</el-button
+          >
+        </span>
+      </template>
+    </el-dialog>
     <router-link to="bie">测试</router-link>
   </div>
 </template>
@@ -60,51 +115,73 @@ import { mapState } from "vuex";
 export default {
   data() {
     return {
-      activeName: "1",
+      centerDialogVisible: false,
       data: [
         {
           name: "大哥1号",
+          id: 1,
           images:
             "https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=2464469379,3345630949&fm=26&gp=0.jpg",
           permissions: ["组员"],
+          password: "123",
         },
         {
           name: "大哥2号",
+          id: 2,
           images:
             "https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=2464469379,3345630949&fm=26&gp=0.jpg",
           permissions: ["组员"],
+          password: "123",
         },
         {
           name: "大哥3号",
+          id: 3,
           images:
             "https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=2464469379,3345630949&fm=26&gp=0.jpg",
           permissions: ["组员"],
+          password: "123",
         },
         {
           name: "大哥4号",
+          id: 4,
           images:
             "https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=2464469379,3345630949&fm=26&gp=0.jpg",
           permissions: ["组员"],
+          password: "123",
         },
         {
           name: "大哥5号",
+          id: 5,
           images:
             "https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=2464469379,3345630949&fm=26&gp=0.jpg",
           permissions: ["组员"],
+          password: "123",
         },
         {
           name: "大哥6号",
+          id: 6,
           images:
             "https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=2464469379,3345630949&fm=26&gp=0.jpg",
           permissions: ["组员"],
+          password: "123",
         },
         {
           name: "大哥7号",
+          id: 7,
           images:
             "https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=2464469379,3345630949&fm=26&gp=0.jpg",
           permissions: ["组员"],
+          password: "123",
         },
       ],
+      ruleForm: {
+        name: "大哥1号",
+        id: 1,
+        images:
+          "https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=2464469379,3345630949&fm=26&gp=0.jpg",
+        permissions: ["组员"],
+        password: "123",
+      },
       single: {
         username: "",
         avatar: "",
@@ -128,10 +205,14 @@ export default {
     console.log(this.single);
   },
   methods: {
-    handleChange(val) {
-      if (val != "") {
-      }
+    handleClick(val) {
+      this.centerDialogVisible = true;
+      console.log(val);
     },
+    // handleChange(val) {
+    //   if (val != "") {
+    //   }
+    // },
   },
 };
 </script>
@@ -201,5 +282,8 @@ export default {
 .bottom_box {
   margin-top: 40px;
   text-align: center;
+}
+.imagess {
+  width: 100px;
 }
 </style>
