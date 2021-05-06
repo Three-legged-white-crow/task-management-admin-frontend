@@ -29,6 +29,8 @@
 </template>
 <script>
 import { genToken } from "../../utils/randomToken";
+import { setAccessToken } from "../../utils/accessToken";
+import { mapActions } from "vuex";
 export default {
   data() {
     return {
@@ -36,13 +38,31 @@ export default {
         account: "admin",
         password: "123456",
       },
+      redirect: undefined,
       rules: {
         account: [{ required: true, message: "请输入账号", trigger: "blur" }],
         password: [{ required: true, message: "请输入密码", trigger: "blur" }],
       },
     };
   },
+  watch: {
+    $route: {
+      handler(route) {
+        this.redirect = (route.query && route.query.redirect) || "/";
+      },
+      immediate: true,
+    },
+  },
   methods: {
+    // ...mapActions(["setAccessToken"]),
+    ...mapActions({
+      add: "setAccessToken",
+    }),
+    handleRoute() {
+      return this.redirect === "/404" || this.redirect === "/403"
+        ? "/"
+        : this.redirect;
+    },
     enter() {
       this.$refs.ruleForm.validate((valid) => {
         if (valid) {
@@ -50,10 +70,26 @@ export default {
             this.ruleForm.account == "admin" &&
             this.ruleForm.password == "123456"
           ) {
-            console.log("成功");
             let token = genToken();
-            console.log(token);
-            this.$router.push("/home");
+            const hour = new Date().getHours();
+            const thisTime =
+              hour < 8
+                ? "早上好"
+                : hour <= 11
+                ? "上午好"
+                : hour <= 13
+                ? "中午好"
+                : hour < 18
+                ? "下午好"
+                : "晚上好";
+            setAccessToken(token);
+            this.add(token);
+            this.$notify({
+              title: `${thisTime}!`,
+              message: "欢迎来到传家",
+              type: "success",
+            });
+            this.$router.push(this.handleRoute());
           } else {
             this.$message.error("账号或密码错误");
           }
@@ -77,6 +113,9 @@ export default {
 <style lang="scss" scoped >
 .middle_width {
   width: 300px;
+}
+.top {
+  width: 100%;
 }
 .login_box {
   position: relative;

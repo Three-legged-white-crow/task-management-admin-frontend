@@ -6,9 +6,35 @@ import { createRouter, createWebHistory } from 'vue-router';
 const router = createRouter({
     history: createWebHistory(),
     routes: [
-        { path: "/", component: () => import('../views/log/login.vue'), meta: { title: '登录页面' }, },
-        { path: "/home", component: () => import('../views/home/home.vue'), meta: { title: '' }, },
+        {
+            path: '/',
+            redirect: '/home'
+        },
+        {
+            path: "/home",
+            name: "home",
+            component: () => import('../views/home/home.vue'),
+            meta: {
+                title: '首页',
+            }
+        },
+        {
+            path: "/login",
+            name: "login",
+            component: () => import('../views/log/login.vue'),
+            meta: {
+                title: '登录页',
+            }
+        },
+        {
+            path: "/bie",
+            name: "bie",
+            component: () => import('../views/bie.vue'),
+            meta: {
+                title: '其他',
+            }
+        },
+
     ]
 })
-
 export default router

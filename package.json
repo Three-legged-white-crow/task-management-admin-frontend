@@ -8,14 +8,18 @@
   },
   "dependencies": {
     "element-plus": "^1.0.2-beta.41",
+    "require": "^2.4.20",
+    "require-uncached": "^2.0.0",
     "sass": "^1.32.11",
     "sass-loader": "^11.0.1",
     "scss": "^0.2.4",
     "scss-loader": "0.0.1",
     "vue": "^3.0.5",
-    "vue-router": "^4.0.6"
+    "vue-router": "^4.0.6",
+    "vuex": "^4.0.0"
   },
   "devDependencies": {
+    "@types/node": "^15.0.2",
     "@vitejs/plugin-vue": "^1.1.4",
     "@vue/compiler-sfc": "^3.0.5",
     "vite": "^2.0.1"
